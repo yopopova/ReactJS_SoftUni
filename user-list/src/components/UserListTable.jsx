@@ -1,6 +1,15 @@
 import UserListItem from "./UserListItem";
+import { useEffect, useState } from "react";
+import * as userService from "../services/userService";
 
 const UserListTable = () => {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        userService.getAll()
+            .then(result => setUsers(result)); // Add users to the state (setUsers).
+    }, []); // if we don't have users, the method will return empty array.
+
     return (
         <div className="table-wrapper">
             <table className="table">
@@ -60,7 +69,19 @@ const UserListTable = () => {
               </thead>
 
               <tbody>
-                <UserListItem />
+                {users.map(user => (
+                    <UserListItem 
+                        key={user._id} // This key is absolutely mandatory for React
+                        firstName={user.firstName}
+                        lastName={user.lastName}
+                        email={user.email}
+                        phoneNumber={user.phoneNumber}
+                        createdAt={user.createdAt}
+                        imageUrl={user.imageUrl}
+                        // {...user} = this is the short syntax
+                    />
+                ))}
+                <UserListItem  />
               </tbody>
             </table>
       </div>
