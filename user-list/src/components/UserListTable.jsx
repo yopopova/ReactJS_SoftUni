@@ -1,6 +1,7 @@
 import UserListItem from "./UserListItem";
 import { useEffect, useState } from "react";
 import * as userService from "../services/userService";
+import CreateUserModal from "./CreateUserModal";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
@@ -9,6 +10,10 @@ const UserListTable = () => {
         userService.getAll()
             .then(result => setUsers(result)); // Add users to the state (setUsers).
     }, []); // if we don't have users, the method will return empty array.
+
+    const createUserClickHandler = () => {
+      console.log('works');
+    }
 
     return (
         <div className="table-wrapper">
@@ -71,7 +76,7 @@ const UserListTable = () => {
               <tbody>
                 {users.map(user => (
                     <UserListItem 
-                        key={user._id} // This key is absolutely mandatory for React
+                        key={user._id} // This key is absolutely mandatory for React component
                         firstName={user.firstName}
                         lastName={user.lastName}
                         email={user.email}
@@ -81,9 +86,12 @@ const UserListTable = () => {
                         // {...user} = this is the short syntax
                     />
                 ))}
-                <UserListItem  />
               </tbody>
             </table>
+
+            <button className="btn-add btn" onClick={createUserClickHandler}>Add new user</button>
+
+            <CreateUserModal />
       </div>
     );
 }
