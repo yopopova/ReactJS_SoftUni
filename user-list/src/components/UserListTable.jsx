@@ -9,7 +9,8 @@ const UserListTable = () => {
 
     useEffect(() => {
         userService.getAll()
-            .then(result => setUsers(result)); // Add users to the state (setUsers).
+            .then(result => setUsers(result)) // Add users to the state (setUsers).
+            .catch(err => console.log(err))
     }, []); // if we don't have users, the method will return empty array.
 
     const createUserClickHandler = () => {
@@ -20,9 +21,24 @@ const UserListTable = () => {
       setShowCreate(false);
     }
 
+    const userCreateHandler = async (e) => {
+      e.preventDefault();
+      
+      const data = Object.fromEntries(new FormData(e.currentTarget));
+      const newUser = await userService.create(data); // Here we create new user to the server and receive it
+      setUsers(state => [...state, newUser]); // Like this we add new user to the array, without page refreshing; just update list with users
+
+      setShowCreate(false);
+    }
+
     return (
         <div className="table-wrapper">
-            {showCreate && <CreateUserModal onClose={hideCreateUserModal} />}
+            {showCreate && (
+              <CreateUserModal 
+                onClose={hideCreateUserModal} 
+                onUserCreate={userCreateHandler}
+              />
+            )}
 
             <table className="table">
               <thead>

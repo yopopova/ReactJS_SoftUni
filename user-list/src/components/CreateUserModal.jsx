@@ -1,12 +1,12 @@
-const CreateUserModal = () => {
+const CreateUserModal = ({onClose, onUserCreate}) => {
     return (
         <div className="overlay">
-          <div className="backdrop"></div>
+          <div className="backdrop" onClick={onClose}></div>
           <div className="modal">
             <div className="user-container">
               <header className="headers">
-                <h2>Edit User/Add User</h2>
-                <button className="btn close">
+                <h2>Add User</h2>
+                <button className="btn close" onClick={onClose}>
                   <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                     className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                     <path fill="currentColor"
@@ -15,7 +15,7 @@ const CreateUserModal = () => {
                   </svg>
                 </button>
               </header>
-              <form>
+              <form onSubmit={onUserCreate}>
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="firstName">First name</label>
@@ -32,7 +32,7 @@ const CreateUserModal = () => {
                     </div>
                   </div>
                 </div>
-        
+
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="email">Email</label>
@@ -49,7 +49,7 @@ const CreateUserModal = () => {
                     </div>
                   </div>
                 </div>
-        
+
                 <div className="form-group long-line">
                   <label htmlFor="imageUrl">Image Url</label>
                   <div className="input-wrapper">
@@ -57,7 +57,7 @@ const CreateUserModal = () => {
                     <input id="imageUrl" name="imageUrl" type="text" />
                   </div>
                 </div>
-        
+
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="country">Country</label>
@@ -74,7 +74,7 @@ const CreateUserModal = () => {
                     </div>
                   </div>
                 </div>
-        
+
                 <div className="form-row">
                   <div className="form-group">
                     <label htmlFor="street">Street</label>
@@ -93,7 +93,7 @@ const CreateUserModal = () => {
                 </div>
                 <div id="form-actions">
                   <button id="action-save" className="btn" type="submit">Save</button>
-                  <button id="action-cancel" className="btn" type="button">
+                  <button id="action-cancel" className="btn" type="button" onClick={onClose}>
                     Cancel
                   </button>
                 </div>
