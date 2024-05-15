@@ -7,6 +7,8 @@ import UserInfoModal from "./UserInfoModal";
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
     const [showCreate, setShowCreate] = useState(false);
+    const [showInfo, setShowInfo] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         userService.getAll()
@@ -32,16 +34,28 @@ const UserListTable = () => {
       setShowCreate(false);
     }
 
+    const userInfoClickHandler = async (userId) => {
+        // const userDetails = await userService.getOne(userId);
+        // console.log(userDetails);
+        setSelectedUser(userId);
+        setShowInfo(true);
+    }
+
     return (
         <div className="table-wrapper">
             {showCreate && (
               <CreateUserModal 
                 onClose={hideCreateUserModal} 
-                onUserCreate={userCreateHandler}
+                onCreate={userCreateHandler}
               />
             )}
 
-            {showInfo && <UserInfoModal />}
+            {showInfo && (
+                <UserInfoModal
+                    onClose={() => setShowInfo(false)}
+                    userId={selectedUser}
+                />
+            )}
 
             <table className="table">
               <thead>
@@ -103,6 +117,7 @@ const UserListTable = () => {
                 {users.map(user => (
                     <UserListItem 
                         key={user._id} // This key is absolutely mandatory for React component
+                        userId={user._id}
                         firstName={user.firstName}
                         lastName={user.lastName}
                         email={user.email}
@@ -110,6 +125,7 @@ const UserListTable = () => {
                         createdAt={user.createdAt}
                         imageUrl={user.imageUrl}
                         // {...user} = this is the short syntax
+                        onInfoClick={userInfoClickHandler}
                     />
                 ))}
               </tbody>
