@@ -5,6 +5,7 @@ import CreateUserModal from "./CreateUserModal";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
+    const [showCreate, setShowCreate] = useState(false);
 
     useEffect(() => {
         userService.getAll()
@@ -12,11 +13,17 @@ const UserListTable = () => {
     }, []); // if we don't have users, the method will return empty array.
 
     const createUserClickHandler = () => {
-      console.log('works');
+      setShowCreate(true);
+    }
+
+    const hideCreateUserModal = () => {
+      setShowCreate(false);
     }
 
     return (
         <div className="table-wrapper">
+            {showCreate && <CreateUserModal onClose={hideCreateUserModal} />}
+
             <table className="table">
               <thead>
                 <tr>
@@ -90,8 +97,6 @@ const UserListTable = () => {
             </table>
 
             <button className="btn-add btn" onClick={createUserClickHandler}>Add new user</button>
-
-            <CreateUserModal />
       </div>
     );
 }
