@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import * as userService from "../services/userService";
 import CreateUserModal from "./CreateUserModal";
 import UserInfoModal from "./UserInfoModal";
+import UserDeleteModal from "./UserDeleteModal";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
     const [showCreate, setShowCreate] = useState(false);
     const [showInfo, setShowInfo] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [showDelete, setShowDelete] = useState(false);
 
     useEffect(() => {
         userService.getAll()
@@ -41,6 +43,18 @@ const UserListTable = () => {
         setShowInfo(true);
     }
 
+    // This function is for clicking the button
+    const deleteUserClickHandler = (userId) => {
+      setSelectedUser(userId);
+      setShowDelete(true);
+      // console.log(userId);
+    }
+
+    // This function delete the current user
+    const deleteUserHandler = async (userId) => {
+      console.log('delete user');
+    }
+
     return (
         <div className="table-wrapper">
             {showCreate && (
@@ -55,6 +69,13 @@ const UserListTable = () => {
                     onClose={() => setShowInfo(false)}
                     userId={selectedUser}
                 />
+            )}
+
+            {showDelete && (
+              <UserDeleteModal
+                onClose={() => setShowDelete(false)}
+                onDelete={deleteUserHandler}
+              />
             )}
 
             <table className="table">
@@ -126,6 +147,7 @@ const UserListTable = () => {
                         imageUrl={user.imageUrl}
                         // {...user} = this is the short syntax
                         onInfoClick={userInfoClickHandler}
+                        onDeleteClick={deleteUserClickHandler}
                     />
                 ))}
               </tbody>
