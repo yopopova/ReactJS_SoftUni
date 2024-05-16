@@ -51,8 +51,18 @@ const UserListTable = () => {
     }
 
     // This function delete the current user
-    const deleteUserHandler = async (userId) => {
-      console.log('delete user');
+    const deleteUserHandler = async () => {
+      // To check user id; selectedUser = id
+      // console.log(selectedUser);
+
+      // Remove user from server
+      const result = await userService.remove(selectedUser);
+
+      // Remove user from state; filter will return new refention to the array with elements which cover the condition
+      setUsers(state => state.filter(user => user._id !==selectedUser));
+
+      // Close the delete modal
+      setShowDelete(false);
     }
 
     return (
