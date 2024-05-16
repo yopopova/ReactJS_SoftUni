@@ -4,18 +4,23 @@ import * as userService from "../services/userService";
 import CreateUserModal from "./CreateUserModal";
 import UserInfoModal from "./UserInfoModal";
 import UserDeleteModal from "./UserDeleteModal";
+import Spinner from "./Spinner";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [showCreate, setShowCreate] = useState(false);
     const [showInfo, setShowInfo] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [showDelete, setShowDelete] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true); // To show the spinner, if the content is still not loaded
+
         userService.getAll()
             .then(result => setUsers(result)) // Add users to the state (setUsers).
             .catch(err => console.log(err))
+            .finally(() => setIsLoading(false)) // After the request is ready, we make it false
     }, []); // if we don't have users, the method will return empty array.
 
     const createUserClickHandler = () => {
@@ -43,7 +48,7 @@ const UserListTable = () => {
         setShowInfo(true);
     }
 
-    // This function is for clicking the button
+    // This function is for clicking the button and show the delete modal
     const deleteUserClickHandler = (userId) => {
       setSelectedUser(userId);
       setShowDelete(true);
@@ -56,7 +61,7 @@ const UserListTable = () => {
       // console.log(selectedUser);
 
       // Remove user from server
-      const result = await userService.remove(selectedUser);
+      await userService.remove(selectedUser);
 
       // Remove user from state; filter will return new refention to the array with elements which cover the condition
       setUsers(state => state.filter(user => user._id !==selectedUser));
@@ -87,6 +92,8 @@ const UserListTable = () => {
                 onDelete={deleteUserHandler}
               />
             )}
+
+            {isLoading && <Spinner />}
 
             <table className="table">
               <thead>
