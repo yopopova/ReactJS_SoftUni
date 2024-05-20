@@ -41,7 +41,13 @@ export default function TodoList() {
           </thead>
 
           <tbody>
-            
+            {todos.map(todo => (
+              <TodoItem 
+                key={todo._id}
+                text={todo.text}
+                isCompleted={todo.isCompleted}
+              />
+            ))}
           </tbody>
         </table>
       </div>
