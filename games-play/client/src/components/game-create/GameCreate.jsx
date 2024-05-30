@@ -1,7 +1,28 @@
+import { useNavigate } from 'react-router-dom';
+import * as gameService from '../../services/gameService';
+
 export default function GameCreate() {
+    const navigate = useNavigate();
+
+    const createGameSubmitHandler = async (e) => {
+        e.preventDefault();
+
+        const gameData = Object.fromEntries(new FormData(e.currentTarget));
+        // console.log(gameData);
+
+        try {
+            // If you create record successfully, navigate to the catalog
+            await gameService.create(gameData);
+            navigate('/games');   
+        } catch (error) {
+            // Error notification
+            console.log(error);
+        }
+    }
+
     return (
         <section id="create-page" className="auth">
-            <form id="create">
+            <form id="create" onSubmit={createGameSubmitHandler}>
                 <div className="container">
                     <h1>Create Game</h1>
                     <label htmlFor="leg-title">Legendary title:</label>
