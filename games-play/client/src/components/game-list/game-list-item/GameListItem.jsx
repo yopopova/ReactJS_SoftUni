@@ -1,4 +1,9 @@
-export default function GameListItem({title, category, imageUrl}) {
+export default function GameListItem({
+  _id,
+  title,
+  category,
+  imageUrl
+}) {
   return (
     <div className="allGames">
       <div className="allGames-info">
