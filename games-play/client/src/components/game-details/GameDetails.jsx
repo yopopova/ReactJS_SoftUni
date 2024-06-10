@@ -8,7 +8,7 @@ import AuthContext from "../../contexts/authContext";
 import reducer from "./commentReducer";
 
 export default function GameDetails() {
-    const { email } = useContext(AuthContext);
+    const { email, userId } = useContext(AuthContext);
     const [game, setGame] = useState({});
 
     // const [comments, setComments] = useState([]);
@@ -50,7 +50,7 @@ export default function GameDetails() {
 
     const {values, onChange, onSubmit} = useForm(addCommentHandler, {
         comment: '',
-    })
+    });
 
     return (
         <section id="game-details">
@@ -81,10 +81,12 @@ export default function GameDetails() {
                 )}
             </div>
 
-            <div className="buttons">
-                <a href="#" className="button">Edit</a>
-                <a href="#" className="button">Delete</a>
-            </div>
+            {userId === game._ownerId && (
+                <div className="buttons">
+                    <a href="#" className="button">Edit</a>
+                    <a href="#" className="button">Delete</a>
+                </div>
+            )}
         </div>
 
         <article className="create-comment">
