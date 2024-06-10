@@ -1,5 +1,6 @@
 import { useContext, useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
+import useForm from "../../hooks/useForm";
 
 import * as gameService from "../../services/gameService";
 import * as commentService from "../../services/commentService";
@@ -12,7 +13,6 @@ export default function GameDetails() {
 
     // const [comments, setComments] = useState([]);
     const [comments, dispatch] = useReducer(reducer, []);
-
     const { gameId } = useParams();
 
     useEffect(() => {
@@ -31,14 +31,10 @@ export default function GameDetails() {
         // .then(setComments);
     }, [gameId]);
 
-    const addCommentHandler = async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.currentTarget);
-
+    const addCommentHandler = async (values) => {
         const newComment = await commentService.create(
             gameId,
-            formData.get('comment'),
+            values.comment,
         );
 
         newComment.owner = { email };
@@ -51,6 +47,10 @@ export default function GameDetails() {
             payload: newComment,
         })
     }
+
+    const {values, onChange, onSubmit} = useForm(addCommentHandler, {
+        comment: '',
+    })
 
     return (
         <section id="game-details">
@@ -89,8 +89,8 @@ export default function GameDetails() {
 
         <article className="create-comment">
             <label>Add new comment:</label>
-            <form className="form" onSubmit={addCommentHandler}>
-                <textarea name="comment" placeholder="Comment......"></textarea>
+            <form className="form" onSubmit={onSubmit}>
+                <textarea name="comment" value={values.comment} onChange={onChange} placeholder="Comment......"></textarea>
                 <input className="btn submit" type="submit" value="Add Comment" />
             </form>
         </article>
