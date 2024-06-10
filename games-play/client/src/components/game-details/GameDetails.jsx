@@ -1,5 +1,5 @@
 import { useContext, useEffect, useReducer, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 
 import * as gameService from "../../services/gameService";
@@ -83,8 +83,8 @@ export default function GameDetails() {
 
             {userId === game._ownerId && (
                 <div className="buttons">
-                    <a href="#" className="button">Edit</a>
-                    <a href="#" className="button">Delete</a>
+                    <Link to="/games/:gameId/edit" className="button">Edit</Link>
+                    <Link to="/games/:gameId/delete" className="button">Delete</Link>
                 </div>
             )}
         </div>
