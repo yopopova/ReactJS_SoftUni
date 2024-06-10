@@ -1,22 +1,34 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import * as gameService from "../../services/gameService";
 import * as commentService from "../../services/commentService";
 import AuthContext from "../../contexts/authContext";
+import reducer from "./commentReducer";
 
 export default function GameDetails() {
     const { email } = useContext(AuthContext);
     const [game, setGame] = useState({});
-    const [comments, setComments] = useState([]);
+
+    // const [comments, setComments] = useState([]);
+    const [comments, dispatch] = useReducer(reducer, []);
+
     const { gameId } = useParams();
 
     useEffect(() => {
         gameService.getOne(gameId)
         .then(setGame);
 
+        // 'dispatch' = action
         commentService.getAll(gameId)
-        .then(setComments);
+        .then((result) => {
+            dispatch({
+                type: 'GET_ALL_COMMENTS',
+                payload: result,
+            })
+        })
+        // In 'result' are all comments.
+        // .then(setComments);
     }, [gameId]);
 
     const addCommentHandler = async (e) => {
@@ -26,11 +38,18 @@ export default function GameDetails() {
 
         const newComment = await commentService.create(
             gameId,
-            formData.get('comment')
+            formData.get('comment'),
         );
 
-        setComments(state => [...state, {...newComment, author: { email }}]);
-        console.log(newComment);
+        newComment.owner = { email };
+
+        // setComments(state => [...state, {...newComment, author: { email }}]);
+        // console.log(newComment);
+
+        dispatch({
+            type: 'ADD_COMMENT',
+            payload: newComment,
+        })
     }
 
     return (
