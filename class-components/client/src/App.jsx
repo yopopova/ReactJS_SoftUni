@@ -4,6 +4,7 @@ import { Component } from "react"; // We must import React, if we want to use cl
 
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
+import TodoList from "./components/TodoList";
 
 const items = [
   {
@@ -71,7 +72,10 @@ class App extends Component {
       todos: [],
       name: 'Pesho'
     }
+
+    this.toggleTodo = this.toggleTodo.bind(this);
   }
+
 
   componentDidMount() {
     console.log('componentDidMount');
@@ -85,10 +89,20 @@ class App extends Component {
     })
   }
 
+  toggleTodo(todoId) {
+    this.setState({
+      todos: this.state.todos.map(todo => todo.id === todoId ? {...todo, isCompleted: !todo.isCompleted} : todo)
+    })
+  }
+
     render() {
         return (
             <>
               <Menu mode="horizontal" items={items} />
+
+              <h1>{this.state.name}</h1>
+
+              <TodoList todos={this.state.todos} toggleTodo={this.toggleTodo} />
             </>
         )
     }
