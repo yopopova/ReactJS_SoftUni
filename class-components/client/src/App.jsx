@@ -1,3 +1,5 @@
+// Class components DON'T use hooks!!! Use live sycle methods such as 'componentDidMount', 'componentDidCatch', 'componentDidUpdate', 'componentWillUnmount'.
+
 import { Component } from "react"; // We must import React, if we want to use class components.
 
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from "@ant-design/icons";
@@ -61,6 +63,28 @@ const items = [
 ];
 
 class App extends Component {
+  // In class components we have ONLY one state a.k.a the constructor
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      todos: [],
+      name: 'Pesho'
+    }
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+
+    fetch('http://localhost:3030/jsonstore/todos')
+    .then(res => res.json())
+    .then(result => {
+      this.setState({
+        todos: Object.values(result)
+      })
+    })
+  }
+
     render() {
         return (
             <>
