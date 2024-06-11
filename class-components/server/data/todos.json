@@ -1,0 +1,20 @@
+{
+    "27fb2227-19f6-47cb-9c5c-97fe2c47677e": {
+        "id": 1,
+        "label": "Find a job",
+        "isCompleted": false,
+        "_id": "27fb2227-19f6-47cb-9c5c-97fe2c47677e"
+    },
+    "ea7d9475-3bdd-4754-815d-bf390deacd00": {
+        "id": 2,
+        "label": "Go to the gym",
+        "isCompleted": false,
+        "_id": "ea7d9475-3bdd-4754-815d-bf390deacd00"
+    },
+    "e3ab195c-313c-4876-91e3-0b38b9033ad8": {
+        "id": 3,
+        "label": "Make your bed",
+        "isCompleted": false,
+        "_id": "e3ab195c-313c-4876-91e3-0b38b9033ad8"
+    }
+}
