@@ -5,6 +5,7 @@ import { Component } from "react"; // We must import React, if we want to use cl
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import TodoList from "./components/TodoList";
+import TodoContext from "./context/TodoContext";
 
 const items = [
   {
@@ -104,13 +105,13 @@ class App extends Component {
 
     render() {
         return (
-            <>
+            <TodoContext.Provider value={{ name: this.state.name, todos: this.state.todos }}>
               <Menu mode="horizontal" items={items} />
 
               <h1>{this.state.name}</h1>
 
               <TodoList todos={this.state.todos} toggleTodo={this.toggleTodo} deleteTodo={this.deleteTodo} />
-            </>
+            </TodoContext.Provider>
         )
     }
 }
