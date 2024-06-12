@@ -74,6 +74,7 @@ class App extends Component {
     }
 
     this.toggleTodo = this.toggleTodo.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
   }
 
 
@@ -95,6 +96,12 @@ class App extends Component {
     })
   }
 
+  deleteTodo(todoId) {
+    this.setState({
+      todos: this.state.todos.filter(todo => todo.id !== todoId),
+    })
+  }
+
     render() {
         return (
             <>
@@ -102,7 +109,7 @@ class App extends Component {
 
               <h1>{this.state.name}</h1>
 
-              <TodoList todos={this.state.todos} toggleTodo={this.toggleTodo} />
+              <TodoList todos={this.state.todos} toggleTodo={this.toggleTodo} deleteTodo={this.deleteTodo} />
             </>
         )
     }
