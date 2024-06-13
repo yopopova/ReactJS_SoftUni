@@ -15,6 +15,17 @@ export const getOne = async (gameId) => {
     return result;
 }
 
+export const getLatest = async () => {
+    const query = new URLSearchParams({
+        // sortBy: `_createdOn desc`,
+        offset: 0,
+        pageSize: 3,
+    });
+
+    const result = await request.get(`${baseUrl}?${query}`);
+    return result;
+}
+
 export const create = async (gameData) => {
     const result = await request.post(baseUrl, gameData);
 
@@ -36,3 +47,4 @@ export const edit = async (gameId, gameData) => {
 }
 
 export const remove = async (gameId) => request.remove(`${baseUrl}/${gameId}`);
+
