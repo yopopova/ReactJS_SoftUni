@@ -60,12 +60,9 @@ export default function GameDetails() {
         }
     }
 
-    // TODO: temp solution
-    const initialValues = useMemo(() => ({
+    const {values, onChange, onSubmit} = useForm(addCommentHandler, {
         comment: '',
-    }), []);
-
-    const {values, onChange, onSubmit} = useForm(addCommentHandler, initialValues);
+    });
 
     // if (Math.random() < 0.5) {
     //     throw new Error('Game details error');
