@@ -1,6 +1,8 @@
-// USING JEST FOR UNIT TESTING
-// npm start for starting
 import * as calculator from './calculator';
+
+// USING JEST FOR UNIT TESTING
+// npm start for start
+// Ctrl + C for stop
 
 describe('Calculator Sum', () => {
     // Using .only, if we want to execute only this test
@@ -35,5 +37,9 @@ describe('Calculator Sum', () => {
 });
 
 describe('Calculator Divide', () => {
-    // TODO...
+
+    // When we expect to throw error, we should make it like function
+    test('Should throw error when divide by zero', () => {
+        expect(() => calculator.divide(2, 0)).toThrow('Division by 0 is not permited.');
+    });
 });
