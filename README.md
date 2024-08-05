@@ -16,3 +16,7 @@ The training provides knowledge and practical skills for the development of Sing
 - Developing client applications with React
 - Working with remote REST services
 - Working with templates and routing
+
+## Note
+
+Please keep in mind that if you want to use any of these materials after downloading the repository, you should run the `npm install` command into your VS Code terminal to generate the `node_modules` folder.
