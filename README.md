@@ -20,3 +20,7 @@ The training provides knowledge and practical skills for the development of Sing
 ## Note
 
 Please keep in mind that if you want to use any of these materials after downloading the repository, you should run the `npm install` command into your VS Code terminal to generate the `node_modules` folder.
+
+## Certificate
+
+![ReactJS - June 2024 - Certificate](https://github.com/user-attachments/assets/982614a2-cc38-4525-88dc-d2744a174eb0)
